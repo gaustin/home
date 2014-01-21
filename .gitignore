@@ -1,4 +1,13 @@
 .emacs.d/auto-save-list
+.emacs.d/places
+.emacs.d/elpa
+.ido.last
+.irb-history
+.gem
+.rnd
+.rvm
+.zlogin
+.zshrc
 .lesshst
 .viminfo
 .CFUserTextEncoding
@@ -13,3 +22,4 @@ Movies
 Music
 Pictures
 Public
+Decisiv
