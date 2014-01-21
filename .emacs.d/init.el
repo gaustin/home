@@ -1,4 +1,5 @@
-;; Initialize package repos
+(set-face-attribute 'default nil :foundry "apple" :family "Anonymous_Pro")
+
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
@@ -7,7 +8,25 @@
   )
 (package-initialize)
 
-(defvar gca-packages '(color-theme
+(defvar gca-packages '(auto-complete
+                       coffee-mode
+                       haml-mode
+                       yaml-mode
+                       magit
+                       rvm
+                       enh-ruby-mode
+                       ruby-end
+                       ruby-refactor
+                       rspec-mode
+                       minitest
+                       web-mode
+                       yasnippet
+                       clojure-mode
+                       clojure-test-mode
+                       cider
+                       paredit
+                       hl-line+
+                       color-theme
                        ido-vertical-mode
                        ido-better-flex)) ;; this matching is kind of insane.
 (dolist (p gca-packages)
@@ -40,6 +59,8 @@
 
 (show-paren-mode t)
 (electric-pair-mode t) ;; auto-insert matching parens, brackets and quotes
+(global-hl-line-mode 0) ;; hl-line+ -- TODO: make the highlight prettier in terminal
+(toggle-hl-line-when-idle 1)
 
 (require 'saveplace)
 (setq-default save-place t)
@@ -56,13 +77,13 @@
 (ido-vertical-mode t)
 ;; TODO: ido-use-virtual-buffers?
 ;; TODO: ctags and find files by tag - http://www.emacswiki.org/emacs/InteractivelyDoThings#toc21
+;; TODO: Helm might be great here, especially the gem searcher
 
 (setq apropos-do-all t) ;; not sure
 (global-set-key (kbd "C-x C-b") 'ibuffer) ;; better buffer list
 (global-set-key (kbd "M-/") 'hippie-expand) ;; questionable expander - TODO: ctags integration? - http://www.emacswiki.org/emacs/HippieExpand
 
 ;; Setup theme
-(require 'color-theme) ;; would not install with package-install here. *shrug*
 (setq color-theme-is-global t)
 (color-theme-initialize)
 (color-theme-jsc-dark)
@@ -82,3 +103,16 @@
 (if (file-exists-p gca-init-dir)
     (dolist (file (directory-files gca-init-dir t "\\.el$"))
       (load file)))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(font-lock-variable-name-face ((t (:foreground "light salmon" :weight bold))))) ;; Prevent '|' in foo.each { |bar| puts bar } from appearing like front slashes.
