@@ -27,6 +27,7 @@
                        paredit
                        hl-line+
                        color-theme
+                       smex
                        ido-vertical-mode
                        ido-better-flex)) ;; this matching is kind of insane.
 (dolist (p gca-packages)
@@ -73,7 +74,9 @@
 
 ;; Finding files/buffers, etc
 (ido-mode t)
+(setq confirm-nonexistent-file-or-buffer nil)
 (setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
 (ido-vertical-mode t)
 ;; TODO: ido-use-virtual-buffers?
 ;; TODO: ctags and find files by tag - http://www.emacswiki.org/emacs/InteractivelyDoThings#toc21
@@ -82,6 +85,35 @@
 (setq apropos-do-all t) ;; not sure
 (global-set-key (kbd "C-x C-b") 'ibuffer) ;; better buffer list
 (global-set-key (kbd "M-/") 'hippie-expand) ;; questionable expander - TODO: ctags integration? - http://www.emacswiki.org/emacs/HippieExpand
+
+;; Find commands
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; This is your old M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+
+;; ctags - TODO: search gems, default completion table, fancy file finder
+;;(setq tags-completion-table)
+;; (defun my-ido-find-tag ()
+;;   "Find a tag using ido"
+;;   (interactive)
+;;   (tags-completion-table)
+;;   (let (tag-names)
+;;     (mapatoms (lambda (x)
+;;                 (push (prin1-to-string x t) tag-names))
+;;               tags-completion-table)
+;;     (find-tag (ido-completing-read "Tag: " tag-names))))
+
+;; (defun ido-find-file-in-tag-files ()
+;;       (interactive)
+;;       (save-excursion
+;;         (let ((enable-recursive-minibuffers t))
+;;           (visit-tags-table-buffer))
+;;         (find-file
+;;          (expand-file-name
+;;           (ido-completing-read
+;;            "Project file: " (tags-table-files) nil t)))))
+;; TODO: ack
 
 ;; Setup theme
 (setq color-theme-is-global t)
