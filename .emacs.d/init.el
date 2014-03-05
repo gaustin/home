@@ -9,6 +9,7 @@
 (package-initialize)
 
 (defvar gca-packages '(auto-complete
+                       expand-region
                        coffee-mode
                        haml-mode
                        yaml-mode
@@ -30,6 +31,9 @@
                        smex
                        ido-vertical-mode
                        ido-better-flex)) ;; this matching is kind of insane.
+
+(global-set-key (kbd "C-@") 'er/expand-region)
+
 (dolist (p gca-packages)
   (when (not (package-installed-p p))
     (package-install p)))
