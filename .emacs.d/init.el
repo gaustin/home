@@ -1,4 +1,20 @@
-(set-face-attribute 'default nil :foundry "apple" :family "Anonymous_Pro")
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(blink-cursor-mode nil)
+ '(custom-enabled-themes (quote (misterioso)))
+ '(custom-safe-themes (quote ("cdc7555f0b34ed32eb510be295b6b967526dd8060e5d04ff0dce719af789f8e5" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(cursor ((t (:background "light green"))))
+ '(font-lock-variable-name-face ((t (:foreground "light salmon" :weight bold)))))
+ ;; Prevent '|' in foo.each { |bar| puts bar } from appearing like front slashes.
 
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -10,6 +26,9 @@
 
 (defvar gca-packages '(auto-complete
                        expand-region
+                       ack-and-a-half
+                       projectile
+                       projectile-rails
                        coffee-mode
                        haml-mode
                        yaml-mode
@@ -30,13 +49,28 @@
                        color-theme
                        smex
                        ido-vertical-mode
-                       ido-better-flex)) ;; this matching is kind of insane.
-
-(global-set-key (kbd "C-@") 'er/expand-region)
-
+                       ;; smart-mode-line
+                       ;; smart-mode-line-powerline-theme
+                       flx-ido)) ;; this matching is kind of insane.
 (dolist (p gca-packages)
   (when (not (package-installed-p p))
     (package-install p)))
+
+;; (sml/setup)
+;; (sml/apply-theme 'powerline)
+
+(global-set-key (kbd "C-@") 'er/expand-region)
+(projectile-global-mode)
+(add-hook 'projectile-mode-hook 'projectile-rails-on)
+(setq projectile-rails-expand-snippet nil) ;; because fuck all this
+
+;; Fuxxy matching
+(require 'flx-ido)
+(ido-mode 1)
+(ido-everywhere 1)
+(flx-ido-mode 1)
+;; disable ido faces to see flx highlights.
+(setq ido-use-faces nil)
 
 ;; Backup and auto-saves go to ~/.emacs.d/auto-save-list
 (setq backup-directory-alist
@@ -74,7 +108,7 @@
 ;; copy/paste
 (setq x-select-enable-clipboard t
       x-select-enable-primary t
-      save-interprogram-paste-before-kill t)
+      save-interprogram-paste-before-kill nil)
 
 ;; Finding files/buffers, etc
 (ido-mode t)
@@ -122,7 +156,7 @@
 ;; Setup theme
 (setq color-theme-is-global t)
 (color-theme-initialize)
-(color-theme-jsc-dark)
+;; (color-theme-jsc-dark)
 
 ;;javascript
 (setq js-indent-level 2) ;; indent js 2 spaces
@@ -135,20 +169,9 @@
 (setq gca-init-dir
       (expand-file-name "init.d" gca-emacs-config-dir))
 
+(set-face-attribute 'default nil :foundry "apple" :family "Anonymous_Pro")
+
 ;; Load all elisp files in ./init.d
 (if (file-exists-p gca-init-dir)
     (dolist (file (directory-files gca-init-dir t "\\.el$"))
       (load file)))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(font-lock-variable-name-face ((t (:foreground "light salmon" :weight bold))))) ;; Prevent '|' in foo.each { |bar| puts bar } from appearing like front slashes.
