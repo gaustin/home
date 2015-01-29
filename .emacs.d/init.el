@@ -59,7 +59,7 @@
 ;; (sml/setup)
 ;; (sml/apply-theme 'powerline)
 
-(global-set-key (kbd "C-@") 'er/expand-region)
+(global-set-key (kbd "C-c =") 'er/expand-region) ;; could condition on display-graphic-p (true if window)
 (projectile-global-mode)
 (add-hook 'projectile-mode-hook 'projectile-rails-on)
 (setq projectile-rails-expand-snippet nil) ;; because fuck all this
