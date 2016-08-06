@@ -46,9 +46,12 @@
                        minitest
                        web-mode
                        yasnippet
+                       haskell-mode
                        clojure-mode
-                       clojure-test-mode
+                       elixir-mode
+;                       clojure-test-mode
                        geiser
+                       ;;quack
                        elm-mode
                        scala-mode2
                        ensime ;; scala enhanced
